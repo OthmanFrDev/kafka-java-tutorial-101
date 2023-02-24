@@ -1,15 +1,16 @@
 package dev.othmanfr;
 
+import org.apache.kafka.clients.producer.Callback;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
+import org.apache.kafka.clients.producer.RecordMetadata;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Properties;
 
-public class ProducerDemo {
-
+public class ProducerDemoWithCallback {
     private static Logger log = LoggerFactory.getLogger(ProducerDemoWithCallback.class.getSimpleName());
 
     public static void main(String[] args) {
@@ -23,9 +24,18 @@ public class ProducerDemo {
         // create a producer
         KafkaProducer<String, String> producer = new KafkaProducer<>(properties);
         // create a producer record
-        ProducerRecord<String, String> producerRecord = new ProducerRecord<>("demo", "Hello world");
+        ProducerRecord<String, String> producerRecord = new ProducerRecord<>("demo","Hello world");
         // send data
-        producer.send(producerRecord);
+        producer.send(producerRecord, new Callback() {
+            @Override
+            public void onCompletion(RecordMetadata metadata, Exception exception) {
+                if (exception != null) {
+                    throw new RuntimeException(exception.getMessage());
+                } else {
+                    log.info("Event sended successfully to the partition {} in topic {}", metadata.partition(), metadata.topic());
+                }
+            }
+        });
         // tell the producer to send all data and block until done -- synchronous
         producer.flush();
         // flush and close the producer
