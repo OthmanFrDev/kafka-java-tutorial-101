@@ -13,7 +13,7 @@ import java.util.Arrays;
 import java.util.Properties;
 
 public class ConsumerDemo {
-    private static Logger log = LoggerFactory.getLogger(ProducerDemoWithCallback.class.getSimpleName());
+    private static Logger log = LoggerFactory.getLogger(ConsumerDemo.class.getSimpleName());
 
     public static void main(String[] args) {
         log.info("Start consuming event");

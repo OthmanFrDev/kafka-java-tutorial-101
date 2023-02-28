@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 import java.util.Properties;
 
 public class ProducerDemoWithSameKey {
-    private static Logger log = LoggerFactory.getLogger(ProducerDemoWithCallback.class.getSimpleName());
+    private static Logger log = LoggerFactory.getLogger(ProducerDemoWithSameKey.class.getSimpleName());
 
     public static void main(String[] args){
         log.info("Start sending event");

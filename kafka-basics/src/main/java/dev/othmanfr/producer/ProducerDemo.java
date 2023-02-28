@@ -10,7 +10,7 @@ import java.util.Properties;
 
 public class ProducerDemo {
 
-    private static Logger log = LoggerFactory.getLogger(ProducerDemoWithCallback.class.getSimpleName());
+    private static Logger log = LoggerFactory.getLogger(ProducerDemo.class.getSimpleName());
 
     public static void main(String[] args) {
         log.info("Start sending event");

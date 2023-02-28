@@ -3,6 +3,7 @@ package dev.othmanfr.consumer;
 import dev.othmanfr.producer.ProducerDemoWithCallback;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
+import org.apache.kafka.clients.consumer.CooperativeStickyAssignor;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.common.errors.WakeupException;
 import org.apache.kafka.common.serialization.StringDeserializer;
@@ -13,8 +14,8 @@ import java.time.Duration;
 import java.util.Arrays;
 import java.util.Properties;
 
-public class ConsumerDemoWithShutdown {
-    private static Logger log = LoggerFactory.getLogger(ConsumerDemoWithShutdown.class.getSimpleName());
+public class ConsumerDemoCooperative {
+    private static Logger log = LoggerFactory.getLogger(ConsumerDemoCooperative.class.getSimpleName());
 
     public static void main(String[] args) {
         log.info("Start consuming event");
@@ -35,6 +36,7 @@ public class ConsumerDemoWithShutdown {
          *  latest : Reset offest to latest offest. Consume from the end of the topic partition (Default)
          */
         properties.setProperty("auto.offset.reset", "earliest");
+        properties.setProperty("partition.assignment.strategy", CooperativeStickyAssignor.class.getName());
 
         // create a consumer
         KafkaConsumer<String, String> consumer = new KafkaConsumer<String, String>(properties);
